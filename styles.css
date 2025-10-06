@@ -1,0 +1,9 @@
+.nav-link {
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 3px solid transparent;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: #0d6efd !important;
+    border-bottom: 3px solid #0d6efd;
+  }
