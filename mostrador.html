@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YoFlujo</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- FontAwesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
-  <!-- Archivo CSS personalizado -->
-  <link rel="stylesheet" href="styles.css" />
+  <title>IFlux</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    
-<div id="nav-placeholder"></div>
+  <div id="nav-placeholder"></div>
 
- 
 
-  <!-- Bootstrap JS Bundle con Popper -->
+  <div class="iflux-main-content">
+    <div id="main-container">
+      <div id="product-search-container">
+        <input type="search" id="product-search" placeholder="BUSCADOR DE PRODUCTOS" />
+        <button id="btn-filter" title="Filtrar productos"><i class="fas fa-filter"></i></button>
+      </div>
+      <div id="product-list" tabindex="0" aria-label="Lista de productos"></div>
+      <button id="btn-see-more">VER MÁS</button>
+      <div id="selection-area">
+        <input type="text" id="selected-product" readonly value="PRODUCTO SELECCIONADO DE LA LISTA" />
+        <button id="btn-quantity-minus">-</button>
+        <input type="number" id="input-quantity" value="1" min="1" />
+        <button id="btn-quantity-plus">+</button>
+        <button id="btn-add">AGREGAR &gt;</button>
+      </div>
+    </div>
+    <div id="right-panel">
+  <button id="btn-clear">LIMPIAR</button>
+  <div id="sales-list" tabindex="0" aria-label="Lista de productos para venta"></div>
+  
+  <div class="sales-total-section">
+    <div id="total-container">
+      <div>TOTAL</div>
+      <input type="text" id="total-price" readonly value="$0" />
+    </div>
+    <div class="payment-section">
+      <label class="form-label">FORMA DE PAGO</label>
+      <div class="payment-options d-flex gap-2 mb-2">
+        <button type="button" class="btn btn-success payment-btn" data-method="efectivo">EFECTIVO</button>
+        <button type="button" class="btn btn-primary payment-btn" data-method="pos">POS</button>
+        <button type="button" class="btn btn-info payment-btn" data-method="transfe">TRANSFE</button>
+      </div>
+    </div>
+    <button id="btn-confirm-sale" class="btn btn-success w-100 mt-2">FINALIZAR VENTA</button>
+  </div>
+</div>
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Script personalizado -->
   <script src="script.js"></script>
 </body>
 </html>
