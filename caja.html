@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,6 +9,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div id="nav-placeholder"></div>
 
@@ -18,13 +20,16 @@
 
     <!-- Búsqueda por texto -->
     <div class="mb-3 d-flex justify-content-center gap-3">
-      <input type="search" id="search-text" class="form-control w-auto" placeholder="Buscar productos o ventas..." aria-label="Buscar productos o ventas" />
-      <button id="btn-clear-search" class="btn btn-outline-secondary" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+      <input type="search" id="search-text" class="form-control w-auto" placeholder="Buscar productos o ventas..."
+        aria-label="Buscar productos o ventas" />
+      <button id="btn-clear-search" class="btn btn-outline-secondary" title="Limpiar búsqueda"><i
+          class="fas fa-times"></i></button>
     </div>
 
     <!-- Filtro por forma de pago -->
     <div class="filter-payment d-flex justify-content-center gap-3 mb-4" id="filter-payment">
-      <button class="btn btn-outline-primary filter-btn active" data-method="todos" title="Mostrar todas las formas de pago">
+      <button class="btn btn-outline-primary filter-btn active" data-method="todos"
+        title="Mostrar todas las formas de pago">
         <i class="fas fa-list"></i>
       </button>
       <button class="btn btn-outline-success filter-btn" data-method="efectivo" title="Efectivo">
@@ -64,7 +69,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
   <script src="caja.js"></script>
 </body>
+
 </html>

@@ -141,15 +141,38 @@ function exportToCSV() {
     return;
   }
 
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "ID,Fecha,Forma de Pago,Total,Productos\n";
+  const headers = ["CANTIDAD", "PRODUCTO", "EFECTIVO", "TARJETA"];
+  let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+
+  let totalDia = 0;
 
   ventasFiltradas.forEach(venta => {
-    const productosStr = venta.productos
-      .map(item => `${item.product.nombre} x${item.quantity} $${(item.product.precio * item.quantity).toFixed(2)}`)
-      .join(" | ");
-    csvContent += `${venta.id},${new Date(venta.fecha).toLocaleString()},${venta.pago},${venta.total},"${productosStr}"\n`;
+    const esEfectivo = venta.pago === "efectivo";
+    const esTarjeta = venta.pago === "pos" || venta.pago === "transfe";
+
+    venta.productos.forEach(item => {
+      const cantidad = item.quantity;
+      const producto = item.product.nombre;
+      const montoTotal = item.product.precio * cantidad;
+
+      let efectivo = "0";
+      let tarjeta = "0";
+
+      if (esEfectivo) {
+        efectivo = montoTotal.toFixed(2);
+        totalDia += montoTotal;
+      } else if (esTarjeta) {
+        tarjeta = montoTotal.toFixed(2);
+        totalDia += montoTotal;
+      }
+
+      const row = [cantidad, producto, efectivo, tarjeta];
+      csvContent += row.map(field => `"${field}"`).join(",") + "\n";
+    });
   });
+
+  // Fila TOTAL
+  csvContent += `\n"TOTAL","","${totalDia.toFixed(2)}","${totalDia.toFixed(2)}"\n`;
 
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
@@ -159,6 +182,7 @@ function exportToCSV() {
   link.click();
   document.body.removeChild(link);
 }
+
 
 // Imprimir listado de ventas
 function printVentas() {

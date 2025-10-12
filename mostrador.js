@@ -10,6 +10,11 @@ async function loadProductos() {
     const response = await fetch("productos.json");
     const data = await response.json();
     productos = data.productos || [];
+    
+    // Si hay productos agregados en localStorage, mézclalos
+    const localProductos = JSON.parse(localStorage.getItem("productos")) || [];
+    productos = [...productos, ...localProductos];
+    
     filteredProductos = productos;
     renderProductCards();
   } catch (e) {

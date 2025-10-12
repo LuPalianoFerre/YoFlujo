@@ -556,3 +556,49 @@ h2 {
     margin: 0.25rem 0.15rem;
   }
 }
+
+
+/* ESTILOS DEL BOTON CREAR PRODUCTO  */
+#crear-producto-container {
+  background: #28292b;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 2rem;
+  max-width: 600px;
+  margin: 2rem auto; /* centrado horizontal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Botón reutilizando estilos del proyecto */
+#btn-crear-producto {
+  background-color: #791e8b;
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 0.7rem 1.8rem;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 4px 8px rgba(121, 30, 139, 0.6);
+}
+
+#btn-crear-producto:hover,
+#btn-crear-producto:focus {
+  background-color: #a64abc;
+  outline: none;
+}
+
+#btn-crear-producto i {
+  font-size: 1.4rem;
+}
+
+#btn-administrar-productos {
+  color: #ffffff; 
+}

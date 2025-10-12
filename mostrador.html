@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,28 +8,15 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
   <div id="nav-placeholder"></div>
-
   <div class="iflux-main-content" id="iflux-main-content">
     <div id="main-container">
       <div id="product-search-container">
         <input type="search" id="product-search" placeholder="BUSCADOR DE PRODUCTOS" />
         <button id="btn-filter" title="Filtrar productos"><i class="fas fa-filter"></i></button>
       </div>
-      <div id="product-list" tabindex="0" aria-label="Lista de productos">
-        <!-- Ejemplo de producto con título y precio en el mismo contenedor con aspecto botón -->
-        <!-- La estructura real será generada dinámicamente vía JS -->
-        <div class="product-item" tabindex="0" role="button" aria-pressed="false">
-          <div class="product-title">Nombre del Producto</div>
-          <div class="product-price">$123.45</div>
-        </div>
-        <div class="product-item" tabindex="0" role="button" aria-pressed="false">
-          <div class="product-title">Otro Producto</div>
-          <div class="product-price">$67.89</div>
-        </div>
-      </div>
+      <div id="product-list" tabindex="0" aria-label="Lista de productos"></div>
       <button id="btn-see-more">VER MÁS</button>
       <div id="selection-area">
         <input type="text" id="selected-product" readonly value="PRODUCTO SELECCIONADO DE LA LISTA" />
@@ -42,13 +28,7 @@
     </div>
     <div id="right-panel">
       <button id="btn-clear">LIMPIAR</button>
-
-      <!-- El listado de productos para venta, con altura controlada por CSS -->
-      <div id="sales-list" tabindex="0" aria-label="Lista de productos para venta">
-        <!-- Aquí van los productos agregados, por JS -->
-      </div>
-
-      <!-- Sección inferior, SIEMPRE visible -->
+      <div id="sales-list" tabindex="0" aria-label="Lista de productos para venta"></div>
       <div class="sales-total-section">
         <div id="total-container">
           <div>TOTAL</div>
@@ -66,10 +46,8 @@
       </div>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
   <script src="mostrador.js"></script>
+  <script src="script.js""></script>
 </body>
-
 </html>
