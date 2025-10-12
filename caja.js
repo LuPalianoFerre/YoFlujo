@@ -90,6 +90,8 @@ function renderVentasListPage() {
   paginationContainer.appendChild(createPageButton("Siguiente", currentPage + 1, currentPage === totalPages));
 }
 
+
+
 // Filtrado por forma de pago
 function filterByPayment(metodo) {
   if (metodo === "todos") {
@@ -99,38 +101,52 @@ function filterByPayment(metodo) {
   }
   currentPage = 1;
   renderVentasListPage();
+  mostrarSubtotalPorPago(metodo);
 }
 
-// Buscar texto en ventas (nombre o ID)
-function filterBySearch(text) {
-  const normalized = text.trim().toLowerCase();
-  if (!normalized) {
-    ventasFiltradas = ventasGuardadas;
+// Función para mostrar subtotal de ventas filtradas según método
+function mostrarSubtotalPorPago(metodo) {
+  const subtotalDiv = document.getElementById("subtotal-payment");
+  if (!subtotalDiv) return;
+
+  let subtotal = 0;
+  if (metodo === "todos") {
+    subtotal = ventasGuardadas.reduce((acc, venta) => acc + venta.total, 0);
   } else {
-    ventasFiltradas = ventasGuardadas.filter(venta => {
-      if (venta.id.toString().includes(normalized)) return true;
-      for (const item of venta.productos) {
-        if (item.product.nombre.toLowerCase().includes(normalized)) return true;
-      }
-      return false;
-    });
+    subtotal = ventasGuardadas
+      .filter(v => v.pago === metodo)
+      .reduce((acc, venta) => acc + venta.total, 0);
   }
-  currentPage = 1;
-  renderVentasListPage();
+
+  subtotalDiv.textContent = `Subtotal ventas (${metodo.toUpperCase()}): $${subtotal.toFixed(2)}`;
 }
 
-// Mostrar total ventas del día actual
+// En la carga inicial también mostrar subtotal general
+document.addEventListener("DOMContentLoaded", () => {
+  loadVentas();
+  setupEventListeners();
+  mostrarSubtotalPorPago("todos"); // Muestra total inicial
+});
+
+// Mostrar total ventas del día actual con formato de fecha de acá
 function calcularTotalVentasDia() {
-  const hoy = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const hoy = new Date();
+  const dia = String(hoy.getDate()).padStart(2, '0');
+  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+  const anio = hoy.getFullYear();
+  const hoyFormateado = `${dia} ${mes} ${anio}`;
+
+  const hoyISO = hoy.toISOString().slice(0, 10); //
   const totalDia = ventasGuardadas.reduce((acc, venta) => {
-    if (venta.fecha.slice(0, 10) === hoy) {
+    if (venta.fecha.slice(0, 10) === hoyISO) {
       return acc + parseFloat(venta.total);
     }
     return acc;
   }, 0);
+
   const totalDiaDiv = document.getElementById("total-day");
   if (totalDiaDiv) {
-    totalDiaDiv.textContent = `Total ventas del día (${hoy}): $${totalDia.toFixed(2)}`;
+    totalDiaDiv.textContent = ` (${hoyFormateado}): TOTAL VENTAS: $${totalDia.toFixed(2)}`;
   }
 }
 

@@ -16,8 +16,6 @@
   <div class="container py-3">
     <h2 class="mb-4">Registros de Venta</h2>
 
-    <div id="total-day" class="total-day mt-3 fw-bold fs-5"></div>
-
     <!-- Búsqueda por texto -->
     <div class="mb-3 d-flex justify-content-center gap-3">
       <input type="search" id="search-text" class="form-control w-auto" placeholder="Buscar productos o ventas..."
@@ -26,8 +24,15 @@
           class="fas fa-times"></i></button>
     </div>
 
+
+    <div id="total-day" class="total-day mt-3 fw-bold fs-5"></div>
+    <div id="subtotal-payment" class="text-center fw-semibold mb-3"></div>
+
+
+
     <!-- Filtro por forma de pago -->
     <div class="filter-payment d-flex justify-content-center gap-3 mb-4" id="filter-payment">
+
       <button class="btn btn-outline-primary filter-btn active" data-method="todos"
         title="Mostrar todas las formas de pago">
         <i class="fas fa-list"></i>
