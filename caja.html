@@ -16,13 +16,7 @@
   <div class="container py-3">
     <h2 class="mb-4">Registros de Venta</h2>
 
-    <!-- Búsqueda por texto -->
-    <div class="mb-3 d-flex justify-content-center gap-3">
-      <input type="search" id="search-text" class="form-control w-auto" placeholder="Buscar productos o ventas..."
-        aria-label="Buscar productos o ventas" />
-      <button id="btn-clear-search" class="btn btn-outline-secondary" title="Limpiar búsqueda"><i
-          class="fas fa-times"></i></button>
-    </div>
+
 
 
     <div id="total-day" class="total-day mt-3 fw-bold fs-5"></div>
@@ -57,9 +51,19 @@
     <!-- Paginación -->
     <nav aria-label="Paginacion de ventas">
       <ul class="pagination justify-content-center" id="pagination-container">
-        <!-- Generación dinámica de botones -->
       </ul>
     </nav>
+
+
+        <!-- Búsqueda por texto -->
+    <div class="mb-3 d-flex justify-content-center gap-3">
+      <input type="search" id="search-text" class="form-control w-auto" placeholder="Buscar productos o ventas..."
+        aria-label="Buscar productos o ventas" />
+      <button id="btn-clear-search" class="btn btn-outline-secondary" title="Limpiar búsqueda"><i
+          class="fas fa-times"></i></button>
+    </div>
+
+
 
     <!-- Botones acción exportar e imprimir -->
     <div class="text-center mt-3">
