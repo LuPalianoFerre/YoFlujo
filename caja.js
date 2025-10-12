@@ -141,39 +141,45 @@ function exportToCSV() {
     return;
   }
 
-  const headers = ["CANTIDAD", "PRODUCTO", "EFECTIVO", "TARJETA"];
-  let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+  // Usamos punto y coma como separador
+  const csvSeparator = ";";
+
+  // Cabeceras
+  const headers = ["CANTIDAD", "PRODUCTO", "PRECIO", "FORMA DE PAGO"];
+  let csvContent = "data:text/csv;charset=utf-8," + headers.join(csvSeparator) + "\n";
 
   let totalDia = 0;
 
   ventasFiltradas.forEach(venta => {
-    const esEfectivo = venta.pago === "efectivo";
-    const esTarjeta = venta.pago === "pos" || venta.pago === "transfe";
-
     venta.productos.forEach(item => {
       const cantidad = item.quantity;
-      const producto = item.product.nombre;
-      const montoTotal = item.product.precio * cantidad;
+      // Limpiar nombre para evitar problemas (quitamos comillas dobles internas)
+      const producto = item.product.nombre.replace(/"/g, '""');
+      let precio = (item.product.precio * cantidad);
+      let formaPago = venta.pago.toUpperCase();
 
-      let efectivo = "0";
-      let tarjeta = "0";
+      totalDia += precio;
 
-      if (esEfectivo) {
-        efectivo = montoTotal.toFixed(2);
-        totalDia += montoTotal;
-      } else if (esTarjeta) {
-        tarjeta = montoTotal.toFixed(2);
-        totalDia += montoTotal;
-      }
+      // Precio con coma decimal para mejor compatibilidad Excel en español
+      let precioStr = precio.toFixed(2).replace(".", ",");
 
-      const row = [cantidad, producto, efectivo, tarjeta];
-      csvContent += row.map(field => `"${field}"`).join(",") + "\n";
+      // Construir línea CSV escapando comillas
+      const row = [
+        cantidad,
+        `"${producto}"`, // entre comillas para cadenas que pueden tener comas o puntos y comas
+        `"${precioStr}"`,
+        `"${formaPago}"`
+      ];
+      csvContent += row.join(csvSeparator) + "\n";
     });
   });
 
-  // Fila TOTAL
-  csvContent += `\n"TOTAL","","${totalDia.toFixed(2)}","${totalDia.toFixed(2)}"\n`;
+  // Total final, dejar vacío segundo campo que es producto
+  let totalStr = totalDia.toFixed(2).replace(".", ",");
 
+  csvContent += `\nTOTAL;;"${totalStr}";\n`;
+
+  // Crear enlace para descargar
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
@@ -182,6 +188,8 @@ function exportToCSV() {
   link.click();
   document.body.removeChild(link);
 }
+
+
 
 
 // Imprimir listado de ventas
