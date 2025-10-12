@@ -157,6 +157,19 @@ function exportToCSV() {
     return;
   }
 
+  // Fecha formateada para mostrar en la caja
+  const hoy = new Date();
+  const dia = String(hoy.getDate()).padStart(2, '0');
+  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+  const anio = hoy.getFullYear();
+  const hoyFormateado = `${dia} ${mes} ${anio}`;
+
+  // Mostrar la fecha en la caja 'total-day' (si existe)
+  const totalDayDiv = document.getElementById("total-day");
+  if (totalDayDiv) {
+    totalDayDiv.innerHTML = `Fecha: ${hoyFormateado}`;
+  }
+
   // Usamos punto y coma como separador
   const csvSeparator = ";";
 
@@ -165,26 +178,37 @@ function exportToCSV() {
   let csvContent = "data:text/csv;charset=utf-8," + headers.join(csvSeparator) + "\n";
 
   let totalDia = 0;
+  let subtotalEfectivo = 0;
+  let subtotalTarjeta = 0;
+  let subtotalTransferencia = 0;
 
   ventasFiltradas.forEach(venta => {
     venta.productos.forEach(item => {
       const cantidad = item.quantity;
-      // Limpiar nombre para evitar problemas (quitamos comillas dobles internas)
       const producto = item.product.nombre.replace(/"/g, '""');
-      let precio = (item.product.precio * cantidad);
-      let formaPago = venta.pago.toUpperCase();
+      let precio = item.product.precio * cantidad;
+      let formaPago = venta.pago.toLowerCase();
 
       totalDia += precio;
 
-      // Precio con coma decimal para mejor compatibilidad Excel en español
+      // Calcular subtotales por método
+      if (formaPago === "efectivo") {
+        subtotalEfectivo += precio;
+      } else if (formaPago === "pos" || formaPago === "tarjeta") {
+        subtotalTarjeta += precio;
+      } else if (formaPago === "transfe" || formaPago === "transferencia") {
+        subtotalTransferencia += precio;
+      }
+
+      // Precio con coma decimal para Excel en español
       let precioStr = precio.toFixed(2).replace(".", ",");
 
       // Construir línea CSV escapando comillas
       const row = [
         cantidad,
-        `"${producto}"`, // entre comillas para cadenas que pueden tener comas o puntos y comas
+        `"${producto}"`,
         `"${precioStr}"`,
-        `"${formaPago}"`
+        `"${formaPago.toUpperCase()}"`
       ];
       csvContent += row.join(csvSeparator) + "\n";
     });
@@ -195,11 +219,16 @@ function exportToCSV() {
 
   csvContent += `\nTOTAL;;"${totalStr}";\n`;
 
-  // Crear enlace para descargar
+  // Agregar subtotales con etiquetas claras
+  csvContent += `Subtotal Efectivo;;"${subtotalEfectivo.toFixed(2).replace(".", ",")}";\n`;
+  csvContent += `Subtotal Tarjeta;;"${subtotalTarjeta.toFixed(2).replace(".", ",")}";\n`;
+  csvContent += `Subtotal Transferencia;;"${subtotalTransferencia.toFixed(2).replace(".", ",")}";\n`;
+
+  // Codificar y lanzar descarga CSV (p.ej. creando un enlace temporal)
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "ventas_exportadas.csv");
+  link.setAttribute("download", `ventas_${dia}${mes}${anio}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
