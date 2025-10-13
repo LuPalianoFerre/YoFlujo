@@ -13,73 +13,57 @@
 <body>
   <div id="nav-placeholder"></div>
 
-  <div class="container py-3">
+  <main class="container py-3">
     <h2 class="mb-4">Registros de Venta</h2>
 
-
-
-
-    <div id="total-day" class="total-day mt-3 fw-bold fs-5"></div>
-    <div id="subtotal-payment" class="text-center fw-semibold mb-3"></div>
-
-
+    <div id="total-day" class="text-center total-day mt-3 fw-bold fs-5"></div>
+    <div id="subtotal-payment" class="text-center fw-bold fs-5"></div>
 
     <!-- Filtro por forma de pago -->
-    <div class="filter-payment d-flex justify-content-center gap-3 mb-4" id="filter-payment">
-
-      <button class="btn btn-outline-primary filter-btn active" data-method="todos"
-        title="Mostrar todas las formas de pago">
+    <section class="filter-payment d-flex justify-content-center gap-3 mb-4" id="filter-payment">
+      <button class="btn filter-btn active" data-method="todos" title="Mostrar todas las formas de pago">
         <i class="fas fa-list"></i>
       </button>
-      <button class="btn btn-outline-success filter-btn" data-method="efectivo" title="Efectivo">
+      <button class="btn filter-btn" data-method="efectivo" title="Efectivo">
         <i class="fas fa-money-bill-wave"></i>
       </button>
-      <button class="btn btn-outline-primary filter-btn" data-method="pos" title="POS (Tarjeta)">
+      <button class="btn filter-btn" data-method="pos" title="POS (Tarjeta)">
         <i class="fas fa-credit-card"></i>
       </button>
-      <button class="btn btn-outline-info filter-btn" data-method="transfe" title="Transferencia">
+      <button class="btn filter-btn" data-method="transfe" title="Transferencia">
         <i class="fas fa-money-check-alt"></i>
       </button>
-    </div>
+    </section>
 
-    <!-- Contenedor animación / mensajes de estado -->
-    <div id="status-message" class="text-center text-muted mb-3"></div>
+    <!-- Mensaje de estado -->
+    <section id="status-message" class="text-center text-muted mb-3"></section>
 
-    <!-- Listado paginado de ventas -->
-    <div id="ventas-list" class="ventas-list mb-4"></div>
+    <!-- Listado de ventas -->
+    <section id="ventas-list" class="ventas-list mb-4"></section>
+
+    <!-- Búsqueda por texto -->
+    <section class="mb-3 d-flex justify-content-center gap-2">
+      <input type="search" id="search-text" class="form-control search-input w-auto"
+        placeholder="Buscar productos o ventas..." aria-label="Buscar productos o ventas" />
+      <button id="btn-clear-search" class="btn btn-clear" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+    </section>
 
     <!-- Paginación -->
-    <nav aria-label="Paginacion de ventas">
-      <ul class="pagination justify-content-center" id="pagination-container">
-      </ul>
+    <nav aria-label="Paginacion de ventas" class="mb-3">
+      <ul class="pagination justify-content-center" id="pagination-container"></ul>
     </nav>
 
+    <!-- Botones exportar e imprimir -->
+    <section class="text-center mt-3">
+      <button id="btn-export" class="btn btn-outline-primary me-3" title="Exportar ventas a CSV"><i class="fas fa-file-csv"></i>
+        Exportar CSV</button>
+      <button id="btn-print" class="btn btn-action" title="Imprimir listado"><i class="fas fa-print"></i>
+        Imprimir</button>
+    </section>
 
-        <!-- Búsqueda por texto -->
-    <div class="mb-3 d-flex justify-content-center gap-3">
-      <input type="search" id="search-text" class="form-control w-auto" placeholder="Buscar productos o ventas..."
-        aria-label="Buscar productos o ventas" />
-      <button id="btn-clear-search" class="btn btn-outline-secondary" title="Limpiar búsqueda"><i
-          class="fas fa-times"></i></button>
-    </div>
-
-
-
-    <!-- Botones acción exportar e imprimir -->
-    <div class="text-center mt-3">
-      <button id="btn-export" class="btn btn-outline-primary me-3" title="Exportar ventas a CSV">
-        <i class="fas fa-file-csv"></i> Exportar CSV
-      </button>
-      <button id="btn-print" class="btn btn-outline-secondary" title="Imprimir listado">
-        <i class="fas fa-print"></i> Imprimir
-      </button>
-    </div>
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="script.js"></script>
-  <script src="caja.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script src="caja.js"></script>
 </body>
 
 </html>
