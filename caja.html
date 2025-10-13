@@ -13,57 +13,151 @@
 <body>
   <div id="nav-placeholder"></div>
 
-  <main class="container py-3">
-    <h2 class="mb-4">Registros de Venta</h2>
+  <!-- Contenedor principal con sidebar + contenido -->
+  <div class="layout-container d-flex">
 
-    <div id="total-day" class="text-center total-day mt-3 fw-bold fs-5"></div>
-    <div id="subtotal-payment" class="text-center fw-bold fs-5"></div>
-
-    <!-- Filtro por forma de pago -->
-    <section class="filter-payment d-flex justify-content-center gap-3 mb-4" id="filter-payment">
-      <button class="btn filter-btn active" data-method="todos" title="Mostrar todas las formas de pago">
-        <i class="fas fa-list"></i>
+    <!-- 🧭 Sidebar lateral -->
+    <aside id="sidebar" class="sidebar">
+      <!-- Botón de despliegue visible solo en móviles -->
+      <button id="toggle-sidebar" class="btn btn-outline-light btn-sm d-md-none mb-3">
+        <i class="fas fa-bars"></i>
       </button>
-      <button class="btn filter-btn" data-method="efectivo" title="Efectivo">
-        <i class="fas fa-money-bill-wave"></i>
-      </button>
-      <button class="btn filter-btn" data-method="pos" title="POS (Tarjeta)">
-        <i class="fas fa-credit-card"></i>
-      </button>
-      <button class="btn filter-btn" data-method="transfe" title="Transferencia">
-        <i class="fas fa-money-check-alt"></i>
-      </button>
-    </section>
 
-    <!-- Mensaje de estado -->
-    <section id="status-message" class="text-center text-muted mb-3"></section>
+      <h5 class="text-light mb-3">Caja Actual</h5>
+      <div id="sidebar-saldo" class="saldo-box text-center mb-4 fw-bold fs-5 text-light">
+        $0.00
+      </div>
+      <div class="saldo-caja text-center mb-4">
+        <h5>Saldo actual</h5>
+        <p id="saldo-caja" class="fw-bold fs-5 text-success">$0.00</p>
+      </div>
 
-    <!-- Listado de ventas -->
-    <section id="ventas-list" class="ventas-list mb-4"></section>
+      <hr class="text-secondary" />
 
-    <!-- Búsqueda por texto -->
-    <section class="mb-3 d-flex justify-content-center gap-2">
-      <input type="search" id="search-text" class="form-control search-input w-auto"
-        placeholder="Buscar productos o ventas..." aria-label="Buscar productos o ventas" />
-      <button id="btn-clear-search" class="btn btn-clear" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
-    </section>
+      <nav class="sidebar-nav mb-4">
+        <ul class="list-unstyled">
+          <li><a href="index.html" class="sidebar-link"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="mostrador.html" class="sidebar-link"><i class="fas fa-store"></i> Mostrador</a></li>
+          <li><a href="caja.html" class="sidebar-link active"><i class="fas fa-cash-register"></i> Caja</a></li>
+          <li><a href="registros.html" class="sidebar-link"><i class="fas fa-clipboard-list"></i> Registros</a></li>
+        </ul>
+      </nav>
 
-    <!-- Paginación -->
-    <nav aria-label="Paginacion de ventas" class="mb-3">
-      <ul class="pagination justify-content-center" id="pagination-container"></ul>
-    </nav>
+      <hr class="text-secondary" />
 
-    <!-- Botones exportar e imprimir -->
-    <section class="text-center mt-3">
-      <button id="btn-export" class="btn btn-outline-primary me-3" title="Exportar ventas a CSV"><i class="fas fa-file-csv"></i>
-        Exportar CSV</button>
-      <button id="btn-print" class="btn btn-action" title="Imprimir listado"><i class="fas fa-print"></i>
-        Imprimir</button>
-    </section>
+      <!-- ⚡ Accesos rápidos -->
+      <div class="sidebar-actions d-flex flex-column gap-2">
+        <div class="sidebar-actions d-flex flex-column gap-2">
+          <button id="btn-registrar-salida" class="btn btn-outline-primary w-100" title="Registrar salida de dinero">
+            <i class="fas fa-minus-circle me-2"></i> Registrar Salida
+          </button>
+          <button id="btn-export" class="btn btn-outline-primary me-3" title="Exportar ventas a CSV">
+            <i class="fas fa-file-csv"></i> Exportar CSV
+          </button>
+          <button id="btn-print" class="btn btn-action" title="Imprimir listado">
+            <i class="fas fa-print"></i> Imprimir</button>
+        </div>
+    </aside>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
-    <script src="caja.js"></script>
+
+
+    <!-- 🧾 Contenido principal -->
+    <main class="container py-3 flex-grow-1">
+      <h2 class="mb-4 text-center text-light">Registros de Venta</h2>
+
+      <div id="total-day" class="text-center total-day mt-3 fw-bold fs-5"></div>
+      <div id="subtotal-payment" class="text-center fw-bold fs-5"></div>
+
+      <!-- Filtro por forma de pago -->
+      <section class="filter-payment d-flex justify-content-center gap-3 mb-4" id="filter-payment">
+        <button class="btn filter-btn active" data-method="todos" title="Mostrar todas las formas de pago">
+          <i class="fas fa-list"></i>
+        </button>
+        <button class="btn filter-btn" data-method="efectivo" title="Efectivo">
+          <i class="fas fa-money-bill-wave"></i>
+        </button>
+        <button class="btn filter-btn" data-method="pos" title="POS (Tarjeta)">
+          <i class="fas fa-credit-card"></i>
+        </button>
+        <button class="btn filter-btn" data-method="transfe" title="Transferencia">
+          <i class="fas fa-money-check-alt"></i>
+        </button>
+      </section>
+
+      <!-- Mensaje de estado -->
+      <section id="status-message" class="text-center text-muted mb-3"></section>
+
+      <!-- Listado de ventas -->
+      <section id="ventas-list" class="ventas-list mb-4"></section>
+
+      <!-- Búsqueda por texto -->
+      <section class="mb-3 d-flex justify-content-center gap-2">
+        <input type="search" id="search-text" class="form-control search-input w-auto"
+          placeholder="Buscar productos o ventas..." aria-label="Buscar productos o ventas" />
+        <button id="btn-clear-search" class="btn btn-clear" title="Limpiar búsqueda">
+          <i class="fas fa-times"></i>
+        </button>
+      </section>
+
+      <!-- Paginación -->
+      <nav aria-label="Paginacion de ventas" class="mb-3">
+        <ul class="pagination justify-content-center" id="pagination-container"></ul>
+      </nav>
+
+
+
+
+      <!-- Modal: Registrar Salida de Dinero -->
+      <div class="modal fade" id="modalRegistrarSalida" tabindex="-1" aria-labelledby="modalRegistrarSalidaLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-dark text-light border border-secondary rounded-3">
+            <div class="modal-header border-0">
+              <h5 class="modal-title" id="modalRegistrarSalidaLabel"><i
+                  class="fas fa-minus-circle me-2 text-danger"></i>Registrar Salida</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+              <form id="formRegistrarSalida">
+                <div class="mb-3">
+                  <label for="tipoSalida" class="form-label fw-semibold">Tipo de salida:</label>
+                  <select id="tipoSalida" class="form-select" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="proveedor">Proveedor</option>
+                    <option value="compra">Compra</option>
+                    <option value="jornal">Jornal</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="descripcionSalida" class="form-label fw-semibold">Descripción:</label>
+                  <input type="text" id="descripcionSalida" class="form-control" placeholder="Ej: Compra de insumos"
+                    required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="montoSalida" class="form-label fw-semibold">Monto ($):</label>
+                  <input type="number" id="montoSalida" class="form-control" step="0.01" min="0.01" required>
+                </div>
+
+                <div class="text-end">
+                  <button type="submit" class="btn btn-outline-primary"><i
+                      class="fas fa-check me-2"></i>Registrar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Scripts -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="script.js"></script>
+      <script src="caja.js"></script>
 </body>
 
 </html>

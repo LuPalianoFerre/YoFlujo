@@ -203,3 +203,111 @@ document.addEventListener("DOMContentLoaded",()=>{
   loadVentas();
   setupEventListeners();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadVentas();
+  setupEventListeners();
+  setupRegistrarSalida(); // ← Nueva función
+});
+
+
+//Sidebar para celus
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("sidebar");
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("show");
+    });
+  }
+});
+
+//accesos en sidebar
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("sidebar");
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("show");
+    });
+  }
+
+  // Actualizar saldo de caja dinámicamente
+  const saldoBox = document.getElementById("sidebar-saldo");
+  if (saldoBox) {
+    const saldo = localStorage.getItem("saldoCaja") || 0;
+    saldoBox.textContent = `$${parseFloat(saldo).toFixed(2)}`;
+  }
+
+  // Accesos rápidos (pueden vincularse luego a funciones reales)
+  document.getElementById("btn-registrar-salida")?.addEventListener("click", () => {
+    alert("Registrar salida de dinero (en desarrollo)");
+  });
+
+  document.getElementById("btn-ver-reportes")?.addEventListener("click", () => {
+    alert("Abrir sección de reportes (en desarrollo)");
+  });
+
+  document.getElementById("btn-export-sidebar")?.addEventListener("click", () => {
+    document.getElementById("btn-export")?.click(); // reutiliza el botón principal
+  });
+});
+
+
+
+//funciones de modal de Salidas de Caja
+// --- Registrar salida de dinero ---
+function setupRegistrarSalida() {
+  const modalSalida = new bootstrap.Modal(document.getElementById('modalRegistrarSalida'));
+  const btnRegistrarSalida = document.getElementById('btn-registrar-salida');
+  const formSalida = document.getElementById('formRegistrarSalida');
+
+  // Abrir modal
+  btnRegistrarSalida.addEventListener('click', () => {
+    formSalida.reset();
+    modalSalida.show();
+  });
+
+  // Registrar salida
+  formSalida.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const tipo = document.getElementById('tipoSalida').value;
+    const descripcion = document.getElementById('descripcionSalida').value.trim();
+    const monto = parseFloat(document.getElementById('montoSalida').value);
+
+    if (!tipo || !descripcion || isNaN(monto) || monto <= 0) {
+      alert("Por favor completa todos los campos correctamente.");
+      return;
+    }
+
+    // Guardar salida en localStorage
+    const salidas = JSON.parse(localStorage.getItem("caja_salidas")) || [];
+    const nuevaSalida = {
+      id: Date.now(),
+      tipo,
+      descripcion,
+      monto,
+      fecha: new Date().toISOString()
+    };
+    salidas.push(nuevaSalida);
+    localStorage.setItem("caja_salidas", JSON.stringify(salidas));
+
+    // Actualizar el estado de caja (restar monto)
+    actualizarSaldoCaja(monto);
+
+    modalSalida.hide();
+    alert("Salida registrada correctamente.");
+  });
+}
+
+// --- Actualizar saldo de caja ---
+function actualizarSaldoCaja(montoSalida) {
+  const saldoActual = parseFloat(localStorage.getItem("caja_saldo")) || 0;
+  const nuevoSaldo = saldoActual - montoSalida;
+  localStorage.setItem("caja_saldo", nuevoSaldo);
+  document.getElementById("saldo-caja").textContent = `$${nuevoSaldo.toFixed(2)}`;
+}
+
