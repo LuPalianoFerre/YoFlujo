@@ -122,7 +122,6 @@ section#right-panel {
 }
 
 /* BOTONES VER MÁS Y SELECCIÓN*/
-#btn-see-more,
 #btn-quantity-minus,
 #btn-quantity-plus,
 #btn-add {
@@ -135,11 +134,6 @@ section#right-panel {
   transition: background-color 0.3s;
 }
 
-#btn-see-more {
-  padding: 0.8rem 1rem;
-  font-size: 1.1rem;
-  width: 100%;
-}
 
 #selection-area {
   display: flex;
@@ -485,7 +479,7 @@ section#right-panel {
 }
 
 /* Botones exportar e imprimir */
-#btn-export, #btn-print, #btn-registrar-salida  {
+#btn-export, #btn-print, #btn-registrar-salida, #btn-see-more, #btn-confirm-sale  {
     background-color: transparent;
     color: rgb(233, 134, 195);
     font-weight: 600;
@@ -499,6 +493,37 @@ section#right-panel {
     padding: 0.5rem 1.2rem;
     transition: background-color 0.3s, color 0.3s;
 }
+
+/* --- Botones de forma de pago (unificados con estilo general de iFlux) --- */
+.payment-btn {
+  background-color: transparent !important;
+  color: rgb(233, 134, 195) !important;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(122, 44, 116);
+  border-radius: 10px;
+  padding: 0.5rem 1.2rem;
+  transition: background-color 0.3s, color 0.3s;
+  text-transform: uppercase;
+}
+
+/* Efecto hover */
+.payment-btn:hover {
+  background-color: rgb(233, 134, 195);
+  color: #1e1f21 !important;
+}
+
+/* Estado activo o seleccionado */
+.payment-btn.active {
+  background-color: rgb(122, 44, 116) !important;
+  color: #fff !important;
+  border-color: rgb(233, 134, 195);
+  box-shadow: 0 0 8px rgba(233, 134, 195, 0.5);
+}
+
 
 /* --- Sidebar --- */
 .sidebar {
